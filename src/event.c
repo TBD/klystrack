@@ -1519,7 +1519,7 @@ void pattern_event(SDL_Event *e)
 								if (gethex(e->key.keysym.sym) != -1)
 								{
 									Uint8 vol = mused.song.pattern[current_pattern()].step[current_patternstep()].volume;
-									if ((vol == MUS_NOTE_NO_VOLUME)) vol = 0;
+									if (vol == MUS_NOTE_NO_VOLUME) vol = 0;
 
 									switch (mused.current_patternx)
 									{

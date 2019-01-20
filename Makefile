@@ -21,6 +21,11 @@ REV := cp -f
 
 CFLAGS := $(MACHINE) -ftree-vectorize -std=gnu99 -Wno-strict-aliasing -Werror
 
+# --- TBD:OSX build - needs an environment variable (eg export KLYSTRACK_OSX=1)
+ifdef KLYSTRACK_OSX
+	CFLAGS += -DRESOURCES_IN_BINARY_DIR -Wno-invalid-source-encoding
+endif
+
 ifdef COMSPEC
 	TARGET := $(TARGET).exe
 	ARCHIVE := $(ARCHIVE).zip
@@ -48,7 +53,7 @@ endif
 
 EXTFLAGS := -DNOSDL_MIXER -DUSESDLMUTEXES -DENABLEAUDIODUMP -DSTEREOOUTPUT -DUSESDL_IMAGE $(EXTFLAGS) $(CFLAGS)
 LDFLAGS :=  -L $(KLYSTRON)/bin.$(CFG) -lengine_gfx -lengine_util -lengine_snd -lengine_gui -lm $(SDLLIBS)
-INCLUDEFLAGS := -I src $(SDLFLAGS) -I $(KLYSTRON)/src -L$(KLYSTRON)/bin.$(CFG) -DRES_PATH="$(RES_PATH)" -DCONFIG_PATH="$(CONFIG_PATH)" $(EXTFLAGS) -DKLYSTRON=$(KLYSTRON)
+INCLUDEFLAGS := -I src $(SDLFLAGS) -I $(KLYSTRON)/src -DRES_PATH="$(RES_PATH)" -DCONFIG_PATH="$(CONFIG_PATH)" $(EXTFLAGS) -DKLYSTRON=$(KLYSTRON)
 
 ifdef COMSPEC
 	LDFLAGS := -lmingw32 $(LDFLAGS)
