@@ -6,6 +6,7 @@
 /src/version.h
 *.dll
 *.exe
+*.app
 zip/data/Default.kt
 zip
 .vscode/ipch/*
