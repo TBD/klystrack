@@ -65,7 +65,9 @@ endif
 
 ifdef COMSPEC
 	LDFLAGS := -lmingw32 $(LDFLAGS)
-else
+endif
+
+ifdef KLYSTRACK_LINUX
 	LDFLAGS := -lasound $(LDFLAGS)
 endif
 
@@ -223,6 +225,18 @@ $(EXE): $(OBJS)
 	@$(ECHO) "Linking $(TARGET)..."
 	$(Q)mkdir -p bin.$(CFG)
 	$(Q)$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+ifdef KLYSTRACK_OSX
+	@$(ECHO) "Making OSX build"
+	mkdir -p klystrack.app/Contents/MacOS
+	cp info.plist ./klystrack.app/Contents/
+
+	cp bin.$(CFG)/$(TARGET) ./klystrack.app/Contents/MacOS
+	
+	mkdir -p klystrack.app/Contents/Resources
+	cp osx.icns ./klystrack.app/Contents/Resources/
+	
+	touch klystrack.app
+endif
 
 release: bin.release/$(TARGET)
 	@$(ECHO) "Building release -->"
